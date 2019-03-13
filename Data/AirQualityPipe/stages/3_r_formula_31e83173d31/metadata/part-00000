@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.feature.RFormula","timestamp":1540921832951,"sparkVersion":"2.3.2","uid":"r_formula_31e83173d31","paramMap":{"stringIndexerOrderType":"frequencyDesc","labelCol":"label","formula":"HighWind ~ OzoneImp + Temp + SolarImp","featuresCol":"features","handleInvalid":"error","forceIndexLabel":false}}
