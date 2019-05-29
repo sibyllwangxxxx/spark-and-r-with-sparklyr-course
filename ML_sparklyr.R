@@ -71,7 +71,76 @@ pred <- cbind(collect(scores), predict(fit, newdata = monday_split$testing))
 
 ml_regression_evaluator(scores, 
                         label_col = "Cancelled",
-                        metric_name = "mse")
+                        metric_name = "rmse")
+
+
+ml_binary_classification_evaluator(scores,
+                                   label_col = "Cancelled",
+                                   metric_name = "areaUnderROC")
+
+
+
+
+
+
+
+
+## model pipelines --------------------------------------------------------
+
+## customized pipe ≈ a function
+## good for scaling, normalization, e.g. if integer change to numeric - data preprocessing etc.
+iris_pipe <- . %>%
+              mutate(Sepal.Width = cut(Sepal.Width, breaks = c(0, 3, 3.5, 4.5))) %>%
+              lm(Sepal.Length ~ Sepal.Width + Species, data = .)
+
+iris_pipe(iris)            
+  
+
+
+
+irisSparkPipe <- ml_pipeline(sc) %>%
+                  ft_bucketizer(input_col = "Sepal_Width",
+                                output_col= "Sepal_Width_Bucket",
+                                splits = c(0, 3, 3.5, 4.5)) %>%
+                  ft_r_formula(formula = Sepal_Width ~ Sepal_Length) %>%
+                  ml_linear_regression()
+
+irisSparkPipe$stages
+
+iris_model <- ml_fit(irisSparkPipe, iris_split$training)
+iris_model
+
+
+## exercise Page 4-6
+monday <- flights %>%
+          filter(Origin == "SEA" & DayOfWeek == 1) %>%
+          #left_join(airports, by = c(Dest = "iata")) %>%
+          select(Cancelled, CRSDepTime, Dest)
+
+# tmp <- flights %>%
+#   filter(Origin == "SEA") %>%
+#   filter(DayOfWeek == 1) 
+
+sea_pipe <- ml_pipeline(sc) %>%
+              # filter(Origin == "SEA" & DayOfWeek == 1) %>%
+              # instead of directly inserting dplyr code in the pipeline (which does not work, line above),  
+              # use ft_dplyr_transformer() to "paste" the dplyr code defined in monday into the pipeline
+              #ft_dplyr_transformer(monday) %>%
+              ft_r_formula(formula = Cancalled ~ Dest) %>%
+              ml_logistic_regression()
+
+sea_pipe
+
+sea_model <- ml_fit(sea_pipe, monday_split$training)
+sea_model
+
+
+
+
+
+
+
+
 
 
 
