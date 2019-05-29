@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Wed May 29 11:30:12 EDT 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-016b-0436-8c32-00006f3ecbd0 
+on database directory memory:/camhpc/home/bwang4/spark-and-r-with-sparklyr-course/databaseName=metastore_db with class loader org.apache.spark.sql.hive.client.IsolatedClientLoader$$anon$1@4c3e1585 
+Loaded from file:/camhpc/home/bwang4/spark/spark-2.4.3-bin-hadoop2.7/jars/derby-10.12.1.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_91-b14
+user.dir=/camhpc/home/bwang4/spark-and-r-with-sparklyr-course
+os.name=Linux
+os.arch=amd64
+os.version=3.10.0-327.el7.x86_64
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
